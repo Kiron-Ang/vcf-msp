@@ -12,12 +12,12 @@ Although making custom programs to work with VCF files is generally frowned upon
 
 ## How users can get started with the project
 
-If you'd like to contribute, please create a pull request!
+If you'd like to contribute, please create a pull request! You can also email Kiron at kiron_ang1@baylor.edu.
 
-## Where users can get help with your project
+## Where users can get help with the project
 
-If you need help, please open an issue on the GitHub page for this project!
+If you need help, please open an issue on the GitHub page for this project! You can also email Kiron at kiron_ang1@baylor.edu
 
 ## Who maintains and contributes to the project
 
-Kiron Ang: https://github.com/Kiron-Ang
+Kiron Ang: https://github.com/Kiron-Ang, kiron_ang1@baylor.edu
