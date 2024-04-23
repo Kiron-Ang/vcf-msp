@@ -8,15 +8,15 @@ Currently, there are no scripts here that are ready for use. The goal is to have
 
 ## Why the project is useful
 
-Although making custom programs to work with VCF files is generally frowned upon because of the voltaile development history of the VCF format, not all problems in computational biology can be resolved with the same scripts in the same package. Furthermore, with all the different formats that researchers use, there is no reasonable way to expect a development team at a university to respond to every single request from other researchers. A repository for active researchers and by active researchers resolves this problem.
+Although making custom programs to work with VCF files is generally frowned upon because of the volatile development history of the VCF format, not all problems in computational biology can be resolved with the same modules in the same package. Furthermore, with all the different formats that researchers use, there is no reasonable way to expect a single development team at a university to respond to every request from researchers. A repository for active researchers and by active researchers resolves this problem.
 
 ## How users can get started with the project
 
-If you'd like to contribute, please create a pull request! You can also email Kiron at kiron_ang1@baylor.edu.
+If you'd like to contribute, please create a pull request on the GitHub page for this project! You can also email Kiron at kiron_ang1@baylor.edu.
 
 ## Where users can get help with the project
 
-If you need help, please open an issue on the GitHub page for this project! You can also email Kiron at kiron_ang1@baylor.edu
+If you need help, please create an issue on the GitHub page for this project! You can also email Kiron at kiron_ang1@baylor.edu
 
 ## Who maintains and contributes to the project
 
