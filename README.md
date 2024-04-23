@@ -1,10 +1,12 @@
 # vcf-msp
 
-This repository contains Python/R/C++ code for working with VCF and MSP files. This is used and maintained by the Reynolds Lab at Baylor University.
+This repository contains Python/R/C++ code for working with VCF and MSP files. It is used and maintained by the Reynolds Lab at Baylor University.
 
 ## What the project does
 
 Currently, there are no scripts here that are ready for use. The goal is to have files in different programming languages that define functions for various tasks. Right now, the first priority is to make a function that will omit information in a VCF file based on corresponding ancestry information in an MSP file.
+
+Run ``main.py`` by using the command line: python [path_to_VCF_file] [path_to_MSP_file]
 
 ## Why the project is useful
 
