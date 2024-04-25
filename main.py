@@ -216,6 +216,11 @@ if __name__ == "__main__":
     import sys
     print("Importing sys")
 
+
+    # Import the time module for timing execution
+    import time
+    print("Importing time")
+
     # Check if the required arguments were specified
     if len(sys.argv) < 3:
         print("Error: Please provide the VCF and MSP paths as arguments.")
@@ -234,5 +239,12 @@ if __name__ == "__main__":
     print("The path of the VCF file you specified:", vcf_path)
     print("The path of the MSP file you specified:", msp_path)
     
+    start_time = time.time()
+    print("The start time is:", start_time)
+
     # Call the desired vcf-msp function
     replace_dot_using_ancestry(vcf_path, msp_path, "0")
+
+    end_time = time.time()
+    print("The end time is:", end_time)
+    print("Total time elapsed:", end_time - start_time)
