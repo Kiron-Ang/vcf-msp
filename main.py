@@ -142,7 +142,13 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
 	
         vcf_line_now = line.split("\t")
         variant_position = int(vcf_line_now[vcf_pos])
-        print("looking at the variant at position", variant_position)
+        print("Variant at position", variant_position)
+
+        # Some of the first tracts might not belong anywhere!
+        if variant_position < msp_spos_value:
+            print(f"Variant at position {variant_position} does not fit in",
+                  " the first tract!")
+            continue
 
         belongs = False
         # Keep checking to see which tract a variant belongs to
@@ -151,8 +157,9 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
         # are sequentially listed. If you get a VCF/MSP that is not
         # ordered, just sort it in ascending order based on pos/spos
         while belongs is False:
-            print(f"Tract is between {msp_spos_value} & {msp_epos_value}") 
-            if msp_spos_value < variant_position < msp_epos_value:
+
+            print(f"Tract between {msp_spos_value} & {msp_epos_value}") 
+            if msp_spos_value <= variant_position <= msp_epos_value:
                 print(f"Variant between {msp_spos_value} & {msp_epos_value}")
                 belongs = True
             else:
@@ -164,8 +171,9 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
                     msp_line_now = msp_lines_list[msp_start].split("\t")
                     msp_spos_value = int(msp_line_now[msp_spos])
                 except:
-                    print("End of MSP ranges reached! Program exiting now...")
-                    exit()
+                    print("End of MSP ranges reached! Function exiting now...")
+                    return
+                # Does variant exist in a gap between tracts?
                 if msp_epos_value < variant_position < msp_spos_value:
                     print("This variant doesn't belong anywhere!")
                     msp_start -= 1
@@ -181,6 +189,11 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
 
             vcf_people_list = vcf_line_now[vcf_people:len(vcf_line_now)]
             msp_people_list = msp_line_now[msp_people:len(msp_line_now)]
+            
+            # You get an error if you have an extra item at the end of 
+            # vcf_people_list
+            if vcf_people_list[-1].isspace() or vcf_people_list[-1] == "":
+                vcf_people_list.pop()
             
             # Iterate through the vcf_people_list because that is what
             # we want to modify and write to a new file
@@ -224,7 +237,7 @@ if __name__ == "__main__":
     # Check if the required arguments were specified
     if len(sys.argv) < 3:
         print("Error: Please provide the VCF and MSP paths as arguments.")
-        print("Usage: python this_script.py <VCF_path> <MSP_path>")
+        print("Usage: python main.py <VCF_path> <MSP_path>")
         sys.exit(1)
 
     # Confirm the current Python version and the name of this script
@@ -247,4 +260,4 @@ if __name__ == "__main__":
 
     end_time = time.time()
     print("The end time is:", end_time)
-    print("Total time elapsed:", end_time - start_time)
+    print("Total time elapsed in seconds:", end_time - start_time)
