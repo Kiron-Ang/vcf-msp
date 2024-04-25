@@ -176,6 +176,8 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
     opened_msp.close()
     new_vcf.close()
 
+
+# Run the following code if this file is the file that is directly executed
 if __name__ == "__main__":
     # Import the sys module for accessing command-line arguments
     import sys
