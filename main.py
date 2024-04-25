@@ -1,7 +1,5 @@
-# This program uses Python programming
-# Here, you will find various functions to 
-# Modify VCF files based on information
-# from a corresponding MSP file
+# This program uses Python programming. There are various functions to modify
+# VCF files based on information from a corresponding MSP file
 
 
 def find_start(path_to_file):
@@ -28,7 +26,7 @@ def find_start(path_to_file):
 def find_first_person(path_to_file, find_start_result):
     """
     Function to find the index of the first person when each row is
-    converted to a list. Use in conjunction with find_start()
+    converted to a list. Use this with find_start()
     """
 
     # Open the file for reading only
@@ -45,7 +43,7 @@ def find_first_person(path_to_file, find_start_result):
         # VCF and MSP files designate people with numbers        
         if title[0].isdigit():
             opened_file.close()
-            print(path_to_file, "begins describing people information in column", start)
+            print(path_to_file, "begins people columns in", start)
             return start
         else:
             start += 1
@@ -54,7 +52,7 @@ def find_first_person(path_to_file, find_start_result):
 def find_column_title(path_to_file, find_start_result, title_name):
     """
     Function to find the index of a column title when each row in
-    a VCF or MSP is converted to a list. Use in conjunction with find_start()
+    a VCF or MSP is converted to a list. Use this with find_start()
     """
 
     # Open the file for reading only
@@ -75,7 +73,6 @@ def find_column_title(path_to_file, find_start_result, title_name):
             return start
         else:
             start += 1
-
 
 
 def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
@@ -101,6 +98,11 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
     vcf_start = find_start(path_to_vcf)
     msp_start = find_start(path_to_msp)
 
+    # Write the information lines and column titles in the new VCF file
+    information_lines = vcf_lines_list[0:vcf_start + 1]
+    for line in information_lines:
+        new_vcf.write(line)
+
     # Figure out the index of the first person for both files
     # This variable will not change
     vcf_people = find_first_person(path_to_vcf, vcf_start)
@@ -115,36 +117,41 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
     msp_spos = find_column_title(path_to_msp, msp_start, "spos")
     msp_epos = find_column_title(path_to_msp, msp_start, "epos")
 
-    # vcf_start and msp_start will represent the current line that the program
-    # is looking at from this point on
+    # vcf_start and msp_start will represent the current line that the
+    # program is looking at from this point on
 
+    # Add one so we don't include the column titles
     vcf_start += 1
     msp_start += 1
 
+    # Make lists where each item is a tract or a variant
     vcf_lines_list = vcf_lines_list[vcf_start:len(vcf_lines_list)]
     msp_lines_list = msp_lines_list[msp_start:len(msp_lines_list)]
 
+    # Set these to 0 so we start at the beginning of the lines lists
     vcf_start = 0
     msp_start = 0
     
-    msp_spos_value = int(msp_lines_list[msp_start].split("\t")[msp_spos])
-    msp_epos_value = int(msp_lines_list[msp_start].split("\t")[msp_epos])
-
-    print("msp_spos_value is", msp_spos_value)
-    print("msp_epos_value is", msp_epos_value)
 
     # Keep going until all lines in VCF have been modified
     for line in vcf_lines_list:
-        vcf_values_list = line.split("\t")
-        variant_position = int(vcf_values_list[vcf_pos])
+
+        msp_line_now = msp_lines_list[msp_start].split("\t")
+        msp_spos_value = int(msp_line_now[msp_spos])
+        msp_epos_value = int(msp_line_now[msp_epos])
+	
+        vcf_line_now = line.split("\t")
+        variant_position = int(vcf_line_now[vcf_pos])
         print("looking at the variant at position", variant_position)
 
         belongs = False
         # Keep checking to see which tract a variant belongs to
         # Note that we don't have to start from the beginning of the MSP
-        # file every time because the tracts are sequentially listed
+        # file every time because both the tracts and the variants
+        # are sequentially listed. If you get a VCF/MSP that is not
+        # ordered, just sort it in ascending order based on pos/spos
         while belongs is False:
-            print(f"Current range is between {msp_spos_value} and {msp_epos_value}") 
+            print(f"Tract is between {msp_spos_value} & {msp_epos_value}") 
             if msp_spos_value < variant_position < msp_epos_value:
                 print(f"Variant between {msp_spos_value} & {msp_epos_value}")
                 belongs = True
@@ -154,23 +161,49 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
                 # belong in any of the ranges)
                 msp_start += 1
                 try:
-                    msp_spos_value = int(msp_lines_list[msp_start].split("\t")[msp_spos])
+                    msp_line_now = msp_lines_list[msp_start].split("\t")
+                    msp_spos_value = int(msp_line_now[msp_spos])
                 except:
                     print("End of MSP ranges reached! Program exiting now...")
                     exit()
                 if msp_epos_value < variant_position < msp_spos_value:
                     print("This variant doesn't belong anywhere!")
                     msp_start -= 1
-                    msp_epos_value = int(msp_lines_list[msp_start].split("\t")[msp_epos])
+                    msp_line_now = msp_lines_list[msp_start].split("\t")
+                    msp_spos_value = int(msp_line_now[msp_spos])
+                    msp_epos_value = int(msp_line_now[msp_epos])
                     break
-                
-                msp_epos_value = int(msp_lines_list[msp_start].split("\t")[msp_epos])
-        if belongs is True:
-            new_vcf.write(f"TRUE {variant_position}\n")
-        else:
-            new_vcf.write(f"FALSE {variant_position}\n")
-        
+                msp_epos_value = int(msp_line_now[msp_epos])
 
+        if belongs is True:
+            # TODO: Create a failsafe for situations where the VCF and MSP
+            # files do not have the same number of people columns
+
+            vcf_people_list = vcf_line_now[vcf_people:len(vcf_line_now)]
+            msp_people_list = msp_line_now[msp_people:len(msp_line_now)]
+            
+            # Iterate through the vcf_people_list because that is what
+            # we want to modify and write to a new file
+            msp_person = 0
+            vcf_person = 0
+            for person in vcf_people_list:
+                if msp_people_list[msp_person] == ancestry_in_msp:
+                    vcf_people_list[vcf_person] = "." + person[1:3]
+                msp_person += 1
+                if msp_people_list[msp_person] == ancestry_in_msp:
+                    vcf_people_list[vcf_person] = person[0:2] + "."
+                msp_person += 1
+                vcf_person += 1
+            
+            # Write same information
+            new_vcf.write('\t'.join(vcf_line_now[0:vcf_people]))
+
+            # Write new information
+            new_vcf.write(f"\t{'\t'.join(vcf_people_list)}")
+
+        else:
+            new_vcf.write(line)
+        
     # Close the three files
     opened_vcf.close()
     opened_msp.close()
@@ -191,8 +224,9 @@ if __name__ == "__main__":
 
     # Confirm the current Python version and the name of this script
     print(f"Executing the script named {sys.argv[0]} with Python",
-          f"{sys.version_info[0]}.{sys.version_info[1]}.{sys.version_info[2]}",
-          f"{sys.version_info[3]} {sys.version_info[4]}")
+          f"{sys.version_info[0]}.{sys.version_info[1]}.",
+          f"{sys.version_info[2]} {sys.version_info[3]} "
+          f"{sys.version_info[4]}")
 
     # Print confirmation messages for VCF and MSP file paths
     vcf_path = sys.argv[1]
@@ -201,4 +235,4 @@ if __name__ == "__main__":
     print("The path of the MSP file you specified:", msp_path)
     
     # Call the desired vcf-msp function
-    replace_dot_using_ancestry(vcf_path, msp_path, 0)
+    replace_dot_using_ancestry(vcf_path, msp_path, "0")
