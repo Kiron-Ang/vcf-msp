@@ -4,9 +4,18 @@ This repository contains Python/R/C++ code for working with VCF and MSP files. I
 
 ## What the project does
 
-Currently, there are no scripts here that are ready for use. The goal is to have files in different programming languages that define functions for various tasks. Right now, the first priority is to make a function that will omit information in a VCF file based on corresponding ancestry information in an MSP file.
+There are two scripts available for use:
 
-Run ``main.py`` by using the command line: ``python [path_to_VCF_file] [path_to_MSP_file]``
+- ``main.py``: Various functions for working with VCF and MSP files in Python
+  - Run ``main.py`` by using the command line: ``python main.py [path_to_VCF_file] [path_to_MSP_file]``
+  - Make sure to edit main.py first to use the function that you want!
+  - ``replace_dot_using_ancestry(vcf_path, msp_path, ancestry_in_msp)`` will replace individuals' information in a VCF file with a "." if the ancestry for that individual in the corresponding MSP file does not match ``ancestry_in_msp``
+
+- ``generate.py``: Create a random VCF file and its corresponding random MSP file
+  - Run ``generate.py`` by using the command line: ``python generate.py [number_of_individuals] [number_of_variants] [number_of_tracts]``
+  - ``generate_vcf(individuals, variants)`` makes a random VCF file; ``generate_msp(individuals, tracts)`` makes a random MSP file.
+
+
 
 ## Why the project is useful
 

@@ -200,10 +200,10 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
             msp_person = 0
             vcf_person = 0
             for person in vcf_people_list:
-                if msp_people_list[msp_person] == ancestry_in_msp:
+                if msp_people_list[msp_person] != ancestry_in_msp:
                     vcf_people_list[vcf_person] = "." + person[1:3]
                 msp_person += 1
-                if msp_people_list[msp_person] == ancestry_in_msp:
+                if msp_people_list[msp_person] != ancestry_in_msp:
                     vcf_people_list[vcf_person] = person[0:2] + "."
                 msp_person += 1
                 vcf_person += 1
