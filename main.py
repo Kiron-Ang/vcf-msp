@@ -1,5 +1,4 @@
-# This program uses Python programming. There are various functions to modify
-# VCF files based on information from a corresponding MSP file
+# This program uses Python programming.
 
 
 def find_start(path_to_file):
