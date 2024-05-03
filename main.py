@@ -211,8 +211,9 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
             new_vcf.write('\t'.join(vcf_line_now[0:vcf_people]))
 
             # Write new information
-            new_vcf.write(f"\t{'\t'.join(vcf_people_list)}")
+            new_vcf.write(f"\t{'\t'.join(vcf_people_list)}\n")
 
+        # If the variant doesn't belong, just write the line without changes
         else:
             new_vcf.write(line)
         
@@ -240,8 +241,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Confirm the current Python version and the name of this script
-    print(f"Executing the script named {sys.argv[0]} with Python",
-          f"{sys.version_info[0]}.{sys.version_info[1]}.",
+    print(f"Executing the script named {sys.argv[0]} with Python "
+          f"{sys.version_info[0]}.{sys.version_info[1]}."
           f"{sys.version_info[2]} {sys.version_info[3]} "
           f"{sys.version_info[4]}")
 
