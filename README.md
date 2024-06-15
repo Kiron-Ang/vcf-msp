@@ -32,3 +32,4 @@ If you need help, please create an issue on the GitHub page for this project! Yo
 ## Who maintains and contributes to the project
 
 - Kiron Ang: https://github.com/Kiron-Ang, kiron_ang1@baylor.edu
+- Fernanda Mirón: https://github.com/fernanda-miron, fernanda_miron1@baylor.edu

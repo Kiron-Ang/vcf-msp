@@ -1,6 +1,3 @@
-# This program uses Python programming.
-
-
 def find_start(path_to_file):
     """Function to find the column titles in an MSP/VCF file"""
 
@@ -14,7 +11,7 @@ def find_start(path_to_file):
     for line in opened_file:
 
         # VCF and MSP files start with a chromosome column        
-        if "#c" in line.casefold():
+        if "#c" == line[0:2].casefold():
             opened_file.close()
             print(path_to_file, "starts at line number", start)
             return start
@@ -62,11 +59,11 @@ def find_column_title(path_to_file, find_start_result, title_name):
 
     lines_list = opened_file.readlines()
     column_titles_list = lines_list[find_start_result].split("\t")
-
+    print(column_titles_list[0:10])
     # Iterate over every column title until you find a number
     for title in column_titles_list:
         # VCF and MSP files designate people with numbers        
-        if title.casefold() == title_name:
+        if title_name.casefold() in title.casefold() :
             opened_file.close()
             print(path_to_file, f"has {title_name} in column", start)
             return start
@@ -130,7 +127,6 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
     # Set these to 0 so we start at the beginning of the lines lists
     vcf_start = 0
     msp_start = 0
-    
 
     # Keep going until all lines in VCF have been modified
     for line in vcf_lines_list:
@@ -146,7 +142,7 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
         # Some of the first tracts might not belong anywhere!
         if variant_position < msp_spos_value:
             print(f"Variant at position {variant_position} does not fit in",
-                  " the first tract!")
+                  "the first tract:", msp_spos_value, "---", msp_epos_value)
             continue
 
         belongs = False
@@ -194,6 +190,9 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
             if vcf_people_list[-1].isspace() or vcf_people_list[-1] == "":
                 vcf_people_list.pop()
             
+            print("People in the VCF file: ", len(vcf_people_list))
+            print("People in the MSP file: ", len(msp_people_list) / 2)
+
             # Iterate through the vcf_people_list because that is what
             # we want to modify and write to a new file
             msp_person = 0
@@ -229,15 +228,16 @@ if __name__ == "__main__":
     import sys
     print("Importing sys")
 
-
     # Import the time module for timing execution
     import time
     print("Importing time")
 
     # Check if the required arguments were specified
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         print("Error: Please provide the VCF and MSP paths as arguments.")
-        print("Usage: python main.py <VCF_path> <MSP_path>")
+        print("Please also provide the number in the MSP that represents")
+        print("the ancestry of interest (0, 1, 2, etc...)")
+        print("Usage: python main.py <VCF_path> <MSP_path> <anc_num>")
         sys.exit(1)
 
     # Confirm the current Python version and the name of this script
@@ -249,14 +249,16 @@ if __name__ == "__main__":
     # Print confirmation messages for VCF and MSP file paths
     vcf_path = sys.argv[1]
     msp_path = sys.argv[2]
+    anc_num = sys.argv[3]
     print("The path of the VCF file you specified:", vcf_path)
     print("The path of the MSP file you specified:", msp_path)
-    
+    print("The ancestry number you specified:", anc_num)
+
     start_time = time.time()
     print("The start time is:", start_time)
 
     # Call the desired vcf-msp function
-    replace_dot_using_ancestry(vcf_path, msp_path, "0")
+    replace_dot_using_ancestry(vcf_path, msp_path, anc_num)
 
     end_time = time.time()
     print("The end time is:", end_time)
