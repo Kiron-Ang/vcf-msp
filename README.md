@@ -7,7 +7,7 @@ This repository contains Python/R/C++ code for working with VCF, MSP, and FB fil
 There are two scripts available for use:
 
 - ``main.py``: Various functions for working with VCF, MSP, and FB files in Python
-  - Run ``main.py`` by using the command line: ``python main.py [path_to_VCF_file] [path_to_MSP_file]``
+  - Run ``main.py`` by using the command line: ``python main.py [path_to_VCF_file] [path_to_MSP_file] [number_in_msp_that_represents_ancestry_of_interest]``
   - Make sure to edit main.py first to use the function that you want!
   - ``replace_dot_using_ancestry(vcf_path, msp_path, ancestry_in_msp)`` will replace individuals' information in a VCF file with a "." if the ancestry for that individual in the corresponding MSP file does not match ``ancestry_in_msp``
 

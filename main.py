@@ -181,6 +181,11 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
         if belongs is True:
             # TODO: Create a failsafe for situations where the VCF and MSP
             # files do not have the same number of people columns
+            # You will get an index error when the number of people in the
+            # VCF file is more than the number of people in the MSP
+            # According to Fernanda, the best solution would be to compare
+            # ID numbers because sometimes the missing people are scattered
+            # throughout the columns and not just at the end!
 
             vcf_people_list = vcf_line_now[vcf_people:len(vcf_line_now)]
             msp_people_list = msp_line_now[msp_people:len(msp_line_now)]
