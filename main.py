@@ -60,7 +60,6 @@ def find_column_title(path_to_file, find_start_result, title_name):
 
   lines_list = opened_file.readlines()
   column_titles_list = lines_list[find_start_result].split("\t")
-  print(column_titles_list[0:10])
   # Iterate over every column title until you find a number
   for title in column_titles_list:
     # VCF and MSP files designate people with numbers    
@@ -196,8 +195,8 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
       if vcf_people_list[-1].isspace() or vcf_people_list[-1] == "":
         vcf_people_list.pop()
       
-      print("People in the VCF file: ", len(vcf_people_list))
-      print("People in the MSP file: ", len(msp_people_list) / 2)
+      print("People in this row of the VCF file: ", len(vcf_people_list))
+      print("People in this row of the MSP file: ", len(msp_people_list) / 2)
 
       # Iterate through the vcf_people_list because that is what
       # we want to modify and write to a new file
