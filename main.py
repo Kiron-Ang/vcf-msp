@@ -72,7 +72,7 @@ def find_column_title(path_to_file, find_start_result, title_name):
       start += 1
 
 
-def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
+def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp, out_name):
   """
   Function to replace numbers in a VCF file with '.' given an MSP file
   and the number that represents the ancestry of interest in the MSP
@@ -84,7 +84,7 @@ def replace_dot_using_ancestry(path_to_vcf, path_to_msp, ancestry_in_msp):
   opened_msp = open(path_to_msp, "r+", encoding="utf-8")
 
   # Open a new file that will contain the VCF modifications
-  new_vcf = open("new_vcf.txt", "w", encoding="utf-8")
+  new_vcf = open(out_name, "w", encoding="utf-8")
 
   # Create lists where every item is a line
   vcf_lines_list = opened_vcf.readlines()
@@ -256,15 +256,17 @@ if __name__ == "__main__":
   vcf_path = sys.argv[1]
   msp_path = sys.argv[2]
   anc_num = sys.argv[3]
+  out_name = sys.argv[4]
   print("The path of the VCF file you specified:", vcf_path)
   print("The path of the MSP file you specified:", msp_path)
   print("The ancestry number you specified:", anc_num)
+  print("The output file will be named:", out_name)
 
   start_time = time.time()
   print("The start time is:", start_time)
 
   # Call the desired vcf-msp function
-  replace_dot_using_ancestry(vcf_path, msp_path, anc_num)
+  replace_dot_using_ancestry(vcf_path, msp_path, anc_num, out_name)
 
   end_time = time.time()
   print("The end time is:", end_time)
