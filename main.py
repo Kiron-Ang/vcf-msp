@@ -239,11 +239,11 @@ if __name__ == "__main__":
   print("Importing time")
 
   # Check if the required arguments were specified
-  if len(sys.argv) < 4:
+  if len(sys.argv) < 5:
     print("Error: Please provide the VCF and MSP paths as arguments.")
     print("Please also provide the number in the MSP that represents")
     print("the ancestry of interest (0, 1, 2, etc...)")
-    print("Usage: python main.py <VCF_path> <MSP_path> <anc_num>")
+    print("Usage: python main.py <VCF_path> <MSP_path> <anc_num> <out_name>")
     sys.exit(1)
 
   # Confirm the current Python version and the name of this script
