@@ -38,10 +38,11 @@ def find_first_person(path_to_file, find_start_result):
   for title in column_titles_list:
     # VCF and MSP files designate people with numbers
     # 0 or 1 should label the first person    
-    if ("0" in title) or ("1" in title):
+    # CHANGE SO IT USES FORMAT
+    if ("FORMAT" in title) or ("snps" in title):
       opened_file.close()
-      print(path_to_file, "begins people columns in", start)
-      return start
+      print(path_to_file, "begins people columns in", start + 1)
+      return start + 1
     else:
       start += 1
 
