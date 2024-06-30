@@ -1,4 +1,4 @@
-# VCF
+# Vcf
 
 Use Python and R to modify VCF, MSP, and FB files.
 
