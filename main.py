@@ -242,7 +242,8 @@ if __name__ == "__main__":
   if len(sys.argv) < 5:
     print("Error: Please provide the VCF and MSP paths as arguments.")
     print("Please also provide the number in the MSP that represents")
-    print("the ancestry of interest (0, 1, 2, etc...)")
+    print("the ancestry of interest (0, 1, 2, etc...) and the desired")
+    print("name of the new file")
     print("Usage: python main.py <VCF_path> <MSP_path> <anc_num> <out_name>")
     sys.exit(1)
 
