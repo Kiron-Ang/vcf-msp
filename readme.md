@@ -1,5 +1,6 @@
 # VCF
-This repository contains code for working with VCF, MSP, and FB files.
+
+Use Python and R to modify VCF, MSP, and FB files.
 
 # Contributors
 
